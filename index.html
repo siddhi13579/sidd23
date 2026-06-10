@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Support App</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8fb;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #0077b6;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #005f87;
+}
+
+.result, .chat-result {
+    margin-top: 15px;
+    padding: 10px;
+    background: #eaf7ea;
+    border-left: 5px solid green;
+}
+
+.chatbox {
+    margin-top: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Healthcare Support Portal</h1>
+
+    <h2>Patient Support Form</h2>
+
+    <form id="healthForm">
+        <label>Name</label>
+        <input type="text" id="name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Health Concern</label>
+        <textarea id="issue" rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="summary" class="result" style="display:none;"></div>
+
+    <div class="chatbox">
+        <h2>Healthcare FAQ Chatbot</h2>
+
+        <input type="text" id="question"
+        placeholder="Ask a question...">
+
+        <button onclick="chatBot()">Ask</button>
+
+        <div id="chatAnswer"
+        class="chat-result"
+        style="display:none;"></div>
+    </div>
+
+</div>
+
+<script>
+
+// Form Submission + Auto Summary
+document.getElementById("healthForm")
+.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let issue = document.getElementById("issue").value;
+
+    let summary =
+    "<strong>Registration Successful!</strong><br><br>" +
+    "<strong>Auto Summary:</strong><br>" +
+    name + " reported: " +
+    issue.substring(0, 80) + "...";
+
+    let resultBox =
+    document.getElementById("summary");
+
+    resultBox.innerHTML = summary;
+    resultBox.style.display = "block";
+});
+
+
+// Simple FAQ Chatbot
+function chatBot(){
+
+    let question =
+    document.getElementById("question")
+    .value.toLowerCase();
+
+    let answer =
+    "Please contact a healthcare professional for detailed guidance.";
+
+    if(question.includes("appointment")){
+        answer =
+        "Appointments are available Monday to Saturday from 9 AM to 6 PM.";
+    }
+
+    else if(question.includes("fever")){
+        answer =
+        "Stay hydrated, rest, and consult a doctor if symptoms continue.";
+    }
+
+    else if(question.includes("covid")){
+        answer =
+        "If you have COVID symptoms, isolate and seek medical advice.";
+    }
+
+    else if(question.includes("contact")){
+        answer =
+        "You can contact our support team at support@healthcare.com.";
+    }
+
+    let chatBox =
+    document.getElementById("chatAnswer");
+
+    chatBox.innerHTML =
+    "<strong>Bot:</strong> " + answer;
+
+    chatBox.style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
